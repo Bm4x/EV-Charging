@@ -16,6 +16,7 @@ int main() {
 	EVCharging charging;
 	charging.printLocations();
 	charging.printAdjacencyMatrix();
+	charging.chargingStationAscending();
 
 	return 0;
 }
