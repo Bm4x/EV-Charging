@@ -1,21 +1,22 @@
-Penrith,1,0.35
 St Marys,0,-1
-Box Hill,1,0
-Kellyville,0,-1
+Blacktown,1,0.50
+St Clair,1,0.30
+Marsden Park,1,0.43
+Richmond,1,0.47
+Jordan Springs,1,0
+Penrith,1,0.55
+Bringelly,1,0.36
+Prestons,1,0.40
+Liverpool,1,0.42
+Revesby,1,0.45
+Bankstown,1,0.35
+Auburn,0,-1
+Epping,1,0
+Dural,1,0.55
 Castle Hill,0,-1
-Blacktown,1,0.25
-Parramatta,1,0.25
-Olympic Park,1,0.4
-Burwood,1,0.46
-Mascot,1,0.45
-Bondi Juction,1,0.25
-Manly,1,0
-Chatswood,1,0.55
-Macquarie Pk,1,0.33
-Hornsby,0,-1
-Central,0,-1
-Hurstville,1,0.3
-Bankstown,1,0.55
-Liverpool,0,-1
-Leppington,0,-1
-Campbelltown,1,0.55
+Box Hill,1,0.54
+Kellyville,1,0.34
+Merrylands,1,0.32
+Rouse Hill,0,-1
+Wetherill Park,1,0
+Cabramatta,0,-1
