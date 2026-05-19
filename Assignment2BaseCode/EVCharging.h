@@ -170,10 +170,10 @@ void EVCharging::adjacentLocation(){
 	// converting list into vector for search/iteration
 	vector<int> adjancentLocations(adjancentList.begin(), adjancentList.end());
 	
-	for(int i = 0; i < adjancentLocations.size(); i++){
+	for(size_t i = 0; i < adjancentLocations.size(); i++){
 		int adjLocation = adjancentLocations[i]; 
-		if(locations[i].chargerInstalled){
-			cout << locations[i].locationName << "\n";
+		if(locations[adjLocation].chargerInstalled){
+			cout << locations[adjLocation].locationName << "\n";
 		}
 	}
 }
