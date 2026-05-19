@@ -18,6 +18,7 @@ int main() {
 	charging.printAdjacencyMatrix();
 	charging.chargingStationAscending();
 	charging.adjacentLocation();
+	charging.nearestLocation();
 
 	return 0;
 }

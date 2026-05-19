@@ -27,7 +27,7 @@ public:
 		else if (!chargerInstalled )
 			cout << setw (17) << "N/A" << endl;
 		else
-		   cout << setw(15) << "$" << setprecision(2) << chargingPrice << "/kWh" << endl;
+			cout << setw(15) << "$" << setprecision(2) << chargingPrice << "/kWh" << endl;
 	}
 
 	bool operator<(const Location& l)  const {

@@ -22,6 +22,7 @@ public:
 	void chargingStationAscending();
 	void adjacentLocation();
 	void nearestLocation();
+	void shortestPath(int vertex);
 };
 
 EVCharging::EVCharging() {
@@ -197,6 +198,23 @@ void EVCharging::nearestLocation(){
 		return;
 	}
 
+	// grabs all adjacency locations from different class fun (using stored value)
+	list<int> adjancentList = weightedGraph->getAdjancencyList(storedValue);
+	
+	// converting list into vector for search/iteration
+	vector<int> adjancentLocations(adjancentList.begin(), adjancentList.end());
+
+	double shortestDistance;
+
+	for(size_t i = 0; i < adjancentLocations.size(); i++){
+
+		double currentDistance = weightedGraph->shortestPath(i);
+
+		if(currentDistance < shortestDistance){
+			shortestDistance = currentDistance; 
+		}
+	}
+	cout << "Shortest Distance is " << shortestDistance;
 }
 
 #endif /* EVCHARGING_H_ */
