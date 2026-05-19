@@ -20,7 +20,7 @@ public:
 	void printLocations();
 	void printAdjacencyMatrix();
 	void chargingStationAscending();
-	void adjacentLocations();
+	void adjacentLocation();
 };
 
 EVCharging::EVCharging() {
@@ -144,7 +144,7 @@ void EVCharging::chargingStationAscending() {
 	
 } //  shellSort 
 
-void EVCharging::adjacentLocations(){
+void EVCharging::adjacentLocation(){
 	Location search;
 	cout << "Enter a location:\n";
 	cin >> search;
