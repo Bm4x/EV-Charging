@@ -21,6 +21,7 @@ public:
 	void printAdjacencyMatrix();
 	void chargingStationAscending();
 	void adjacentLocation();
+	void nearestLocation();
 };
 
 EVCharging::EVCharging() {
@@ -137,7 +138,7 @@ void EVCharging::chargingStationAscending() {
 	   } // while 
 
 	cout <<  "\nSorted array:   " ;
-	for (int i = 0; i < list.size(); i++ ){
+	for (size_t i = 0; i < list.size(); i++ ){
 		list[i].printLocation();
 	}
 		
@@ -157,6 +158,11 @@ void EVCharging::adjacentLocation(){
 			break;
 		}
 	}
+	
+	if(!storedValue){
+		cout << "Location could not be found.\n";
+		return;
+	}
 
 	// grabs all adjacency locations from different class fun (using stored value)
 	list<int> adjancentList = weightedGraph->getAdjancencyList(storedValue);
@@ -170,6 +176,27 @@ void EVCharging::adjacentLocation(){
 			cout << locations[i].locationName << "\n";
 		}
 	}
+}
+
+void EVCharging::nearestLocation(){
+	int storedValue;
+	string search;
+
+	cout << "Enter a location: ";
+	getline(cin, search);
+
+	for(int i = 0; i < numberOfLocations; i++){
+		if(locations[i].locationName == search){
+			storedValue = i;
+			break;
+		}
+	}
+	
+	if(!storedValue){
+		cout << "Location could not be found.\n";
+		return;
+	}
+
 }
 
 #endif /* EVCHARGING_H_ */
