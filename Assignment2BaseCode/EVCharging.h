@@ -145,12 +145,30 @@ void EVCharging::chargingStationAscending() {
 } //  shellSort 
 
 void EVCharging::adjacentLocation(){
-	Location search;
-	cout << "Enter a location:\n";
-	cin >> search;
+	int storedValue;
+	string search;
 
-	while(search != location){
+	cout << "Enter a location: ";
+	getline(cin, search);
+
+	for(int i = 0; i < numberOfLocations; i++){
+		if(locations[i].locationName == search){
+			storedValue = i;
+			break;
+		}
+	}
+
+	// grabs all adjacency locations from different class fun (using stored value)
+	list<int> adjancentList = weightedGraph->getAdjancencyList(storedValue);
 	
+	// converting list into vector for search/iteration
+	vector<int> adjancentLocations(adjancentList.begin(), adjancentList.end());
+	
+	for(int i = 0; i < adjancentLocations.size(); i++){
+		int adjLocation = adjancentLocations[i]; 
+		if(locations[i].chargerInstalled){
+			cout << locations[i].locationName << "\n";
+		}
 	}
 }
 
