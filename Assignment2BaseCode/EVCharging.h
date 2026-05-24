@@ -204,17 +204,22 @@ void EVCharging::nearestLocation(){
 	// converting list into vector for search/iteration
 	vector<int> adjancentLocations(adjancentList.begin(), adjancentList.end());
 
-	double shortestDistance;
+	double shortestDistance = DBL_MAX;
+	int shortestIndex;
 
 	for(size_t i = 0; i < adjancentLocations.size(); i++){
-
+		if(i == storedValue || !locations[i].chargerInstalled) continue;
 		double currentDistance = weightedGraph->shortestPath(i);
-
-		if(currentDistance < shortestDistance){
-			shortestDistance = currentDistance; 
+		if( currentDistance < shortestDistance) {
+			shortestDistance = currentDistance;
+			shortestIndex = i;
 		}
 	}
-	cout << "Shortest Distance is " << shortestDistance;
+	if(shortestIndex == -1 || shortestDistance == DBL_MAX){
+		cout << "Could Not Locate Charging Station.\n";
+	} else {
+		cout << "Shortest Distance is " << locations[shortestIndex].locationName << ", " << shortestDistance << "\n";
+	}
 }
 
 #endif /* EVCHARGING_H_ */
