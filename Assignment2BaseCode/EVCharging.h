@@ -216,7 +216,7 @@ void EVCharging::nearestLocation(){
 	if(shortestIndex == -1 || shortestDistance == DBL_MAX){
 		cout << "Could Not Locate Charging Station.\n";
 	} else {
-		cout << "Shortest Distance is " << locations[shortestIndex].locationName << ": " << shortestDistance << "km\n";
+		cout << "The Closest Station to " << search << " is " << locations[shortestIndex].locationName << ": " << shortestDistance << "km\n";
 	}
 }
 
