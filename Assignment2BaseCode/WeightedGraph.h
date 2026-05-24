@@ -19,7 +19,6 @@ protected:
 	int gSize;      //number of vertices
 	list<int> *graph; // Store adjacency list
 	double **weights; // Store weights of edges
-	double **weights;
     double *smallestWeight;
 public:
 	WeightedGraphType(int size = 0);
@@ -113,6 +112,8 @@ void WeightedGraphType::printAdjacencyList() { //print adjacency list for debug 
 }
 
 double WeightedGraphType::shortestPath(int vertex){
+	smallestWeight = new double[gSize];
+
 	for (int j = 0; j < gSize; j++)
         smallestWeight[j] = weights[vertex][j];
 
@@ -145,6 +146,8 @@ double WeightedGraphType::shortestPath(int vertex){
                 if (minWeight + weights[v][j] < smallestWeight[j])
                     smallestWeight[j] = minWeight + weights[v][j];
     } //end for
+	delete[] smallestWeight;
+	return smallestWeight[vertex];
 } //end shortestPath
 
 #endif
