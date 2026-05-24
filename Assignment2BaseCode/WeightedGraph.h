@@ -19,8 +19,9 @@ protected:
 	int gSize;      //number of vertices
 	list<int> *graph; // Store adjacency list
 	double **weights; // Store weights of edges
-    double *smallestWeight;
+    
 public:
+	double *smallestWeight;
 	WeightedGraphType(int size = 0);
 	~WeightedGraphType();
 

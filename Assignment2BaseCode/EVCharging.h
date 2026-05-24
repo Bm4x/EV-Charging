@@ -147,10 +147,10 @@ void EVCharging::chargingStationAscending() {
 } //  shellSort 
 
 void EVCharging::adjacentLocation(){
-	int storedValue;
+	int storedValue = -1;
 	string search;
-
-	cout << "All Adjacent Locations [Enter a location]: ";
+	
+	cout << "All Adjacent Locations with charging station [Enter a location]: ";
 	getline(cin, search);
 
 	for(int i = 0; i < numberOfLocations; i++){
@@ -160,7 +160,7 @@ void EVCharging::adjacentLocation(){
 		}
 	}
 	
-	if(!storedValue){
+	if(storedValue == -1){
 		cout << "Location could not be found.\n";
 		return;
 	}
@@ -171,8 +171,9 @@ void EVCharging::adjacentLocation(){
 	// converting list into vector for search/iteration
 	vector<int> adjancentLocations(adjancentList.begin(), adjancentList.end());
 	
-	for(size_t i = 0; i < adjancentLocations.size(); i++){
+	for(int i = 0; i < adjancentLocations.size(); i++){
 		int adjLocation = adjancentLocations[i]; 
+		if(adjLocation == storedValue) continue;
 		if(locations[adjLocation].chargerInstalled){
 			cout << locations[adjLocation].locationName << "\n";
 		}
@@ -193,24 +194,21 @@ void EVCharging::nearestLocation(){
 		}
 	}
 	
-	if(!storedValue){
+	if(storedValue == -1){
 		cout << "Location could not be found.\n";
 		return;
 	}
-
-	// grabs all adjacency locations from different class fun (using stored value)
-	list<int> adjancentList = weightedGraph->getAdjancencyList(storedValue);
-	
-	// converting list into vector for search/iteration
-	vector<int> adjancentLocations(adjancentList.begin(), adjancentList.end());
+	weightedGraph->shortestPath(storedValue);
 
 	double shortestDistance = DBL_MAX;
-	int shortestIndex;
+	int shortestIndex = -1;
 
-	for(size_t i = 0; i < adjancentLocations.size(); i++){
-		if(i == storedValue || !locations[i].chargerInstalled) continue;
-		double currentDistance = weightedGraph->shortestPath(i);
-		if( currentDistance < shortestDistance) {
+	for(int i = 0; i < numberOfLocations; i++){
+		if(locations[i].locationName == locations[storedValue].locationName || !locations[i].chargerInstalled) continue;
+
+		double currentDistance = weightedGraph->smallestWeight[i];
+
+		if(currentDistance < shortestDistance) {
 			shortestDistance = currentDistance;
 			shortestIndex = i;
 		}
@@ -218,7 +216,7 @@ void EVCharging::nearestLocation(){
 	if(shortestIndex == -1 || shortestDistance == DBL_MAX){
 		cout << "Could Not Locate Charging Station.\n";
 	} else {
-		cout << "Shortest Distance is " << locations[shortestIndex].locationName << ", " << shortestDistance << "\n";
+		cout << "Shortest Distance is " << locations[shortestIndex].locationName << ": " << shortestDistance << "km\n";
 	}
 }
 
