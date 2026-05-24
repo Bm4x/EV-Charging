@@ -23,6 +23,7 @@ public:
 	void adjacentLocation();
 	void nearestLocation();
 	void shortestPath(int vertex);
+	void lowestTotalCost();
 };
 
 EVCharging::EVCharging() {
@@ -118,32 +119,28 @@ void EVCharging::chargingStationAscending() {
 
 //	Statements 
 	incre = last / 2;
-	while (incre != 0)
-	   { cout << "\nk=" << incre;
-	    for (curr = incre; curr <= last; curr++) 
-	       {
-	        hold = list[curr];
-	        walker = curr - incre;
-	        while (walker >= 0 && hold.chargingPrice < list[walker].chargingPrice)
-	           {
+	while (incre != 0) { 
+		cout << "\nk=" << incre;
+		for (curr = incre; curr <= last; curr++) {
+			hold = list[curr];
+			walker = curr - incre;
+			while (walker >= 0 && hold.chargingPrice < list[walker].chargingPrice) {
 	            // Move larger element up in list 
-	            list[walker + incre] = list[walker];
+				list[walker + incre] = list[walker];
 	            //  Fall back one partition 
-	            walker = (walker - incre);
+				walker = (walker - incre);
 	           } //  while 
 	        // Insert hold in proper relative position 
-	        list[walker + incre] = hold;
+			list[walker + incre] = hold;
 	       } // for 
 	    //  End of pass--calculate next increment. 
-	    incre = incre / 2;
+		incre = incre / 2;
 	   } // while 
 
 	cout <<  "\nSorted array (ascending order of charging price):   \n" ;
-	for (size_t i = 0; i < list.size(); i++ ){
+	for (size_t i = 0; i < list.size(); i++ ) {
 		list[i].printLocation();
 	}
-		
-	
 } //  shellSort 
 
 void EVCharging::adjacentLocation(){
@@ -220,8 +217,8 @@ void EVCharging::nearestLocation(){
 	}
 }
 
-void lowestTotalCost(){
-	
+void EVCharging::lowestTotalCost(){
+
 }
 
 #endif /* EVCHARGING_H_ */
