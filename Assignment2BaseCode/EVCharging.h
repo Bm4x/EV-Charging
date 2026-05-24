@@ -220,4 +220,8 @@ void EVCharging::nearestLocation(){
 	}
 }
 
+void lowestTotalCost(){
+	
+}
+
 #endif /* EVCHARGING_H_ */
