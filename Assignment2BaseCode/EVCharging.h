@@ -138,7 +138,7 @@ void EVCharging::chargingStationAscending() {
 	    incre = incre / 2;
 	   } // while 
 
-	cout <<  "\nSorted array:   " ;
+	cout <<  "\nSorted array (ascending order of charging price):   \n" ;
 	for (size_t i = 0; i < list.size(); i++ ){
 		list[i].printLocation();
 	}
@@ -150,7 +150,7 @@ void EVCharging::adjacentLocation(){
 	int storedValue;
 	string search;
 
-	cout << "Enter a location: ";
+	cout << "All Adjacent Locations [Enter a location]: ";
 	getline(cin, search);
 
 	for(int i = 0; i < numberOfLocations; i++){
@@ -183,7 +183,7 @@ void EVCharging::nearestLocation(){
 	int storedValue;
 	string search;
 
-	cout << "Enter a location: ";
+	cout << "Nearest Location with available charging station [Enter a location]: ";
 	getline(cin, search);
 
 	for(int i = 0; i < numberOfLocations; i++){

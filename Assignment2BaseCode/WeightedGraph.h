@@ -58,6 +58,7 @@ WeightedGraphType::WeightedGraphType(int size) {
 	graph = new list<int> [gSize];
 
 	weights = new double*[gSize];
+	smallestWeight = new double[gSize];
 
 	for (int i = 0; i < gSize; i++)
 		weights[i] = new double[gSize];
@@ -82,6 +83,7 @@ WeightedGraphType::~WeightedGraphType() {
 		delete[] weights[i];
 
 	delete[] weights;
+	delete[] smallestWeight;
 
 	for (int index = 0; index < gSize; index++)
 		graph[index].clear();
@@ -112,8 +114,6 @@ void WeightedGraphType::printAdjacencyList() { //print adjacency list for debug 
 }
 
 double WeightedGraphType::shortestPath(int vertex){
-	smallestWeight = new double[gSize];
-
 	for (int j = 0; j < gSize; j++)
         smallestWeight[j] = weights[vertex][j];
 
@@ -146,7 +146,6 @@ double WeightedGraphType::shortestPath(int vertex){
                 if (minWeight + weights[v][j] < smallestWeight[j])
                     smallestWeight[j] = minWeight + weights[v][j];
     } //end for
-	delete[] smallestWeight;
 	return smallestWeight[vertex];
 } //end shortestPath
 
