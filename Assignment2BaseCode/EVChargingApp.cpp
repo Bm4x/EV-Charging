@@ -19,7 +19,7 @@ int main() {
 	charging.chargingStationAscending();
 	charging.adjacentLocation();
 	charging.nearestLocation();
-	charging.low
+	charging.lowestTotalCost();
 
 	return 0;
 }
