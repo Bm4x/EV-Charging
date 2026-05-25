@@ -110,6 +110,7 @@ void EVCharging::chargingStationAscending() {
 
 	// error checking
 	if (list.empty()) return;
+
 	//	Local Definitions 
 	int last = list.size() - 1;
 	Location hold;
@@ -195,7 +196,8 @@ void EVCharging::nearestLocation(){
 		cout << "Location could not be found.\n";
 		return;
 	}
-	weightedGraph->shortestPath(storedValue);
+
+	weightedGraph->shortestPath(storedValue);``
 
 	double shortestDistance = DBL_MAX;
 	int shortestIndex = -1;
