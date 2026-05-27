@@ -179,7 +179,7 @@ void EVCharging::adjacentLocation(){
 }
 
 void EVCharging::nearestLocation(){
-	int storedValue;
+	int storedValue = -1;
 	string search;
 
 	cout << "Nearest Location with available charging station [Enter a location]: ";
@@ -197,7 +197,7 @@ void EVCharging::nearestLocation(){
 		return;
 	}
 
-	weightedGraph->shortestPath(storedValue);``
+	weightedGraph->shortestPath(storedValue);
 
 	double shortestDistance = DBL_MAX;
 	int shortestIndex = -1;
@@ -221,7 +221,7 @@ void EVCharging::nearestLocation(){
 
 void EVCharging::lowestTotalCost(){
   int chargingAmount;
-  int storedValue;
+  int storedValue = -1;
 	string search;
 
 	cout << "Nearest available charger with minimmised total coast of travel and charging [Enter a location]: ";
@@ -242,16 +242,16 @@ void EVCharging::lowestTotalCost(){
   cout << "Enter charging amount required (10kWh to 50kWh) ";
   cin >> chargingAmount;
 
-  if(chargingAmount > 10 && chargingAmount < 50){
+  if(chargingAmount < 10 || chargingAmount > 50){
     cout << "Invalid Number for Charging Amount";
     return;
   }
 
-  weightedGraph->shortestPath(storedValue);``
+  weightedGraph->shortestPath(storedValue);
 
 	double lowestCost = DBL_MAX;
 	int lowestIndex = -1;
-  int shortestDistance;
+  double shortestDistance = DBL_MAX;
 
 
 	for(int i = 0; i < numberOfLocations; i++){
@@ -264,15 +264,15 @@ void EVCharging::lowestTotalCost(){
 
 		if(chargingCost < lowestCost) {
 			shortestDistance = currentDistance;
-			shortestIndex = i;
+			lowestIndex = i;
       lowestCost = chargingCost;
 		}
 	}
 
-	if(shortestIndex == -1 || shortestDistance == DBL_MAX){
+	if(lowestIndex == -1 || shortestDistance == DBL_MAX){
 		cout << "Could Not Locate Charging Station.\n";
 	} else {
-	  cout << "The lowest cost of travel and charging is $" << chargingCost << ", at " << locations[short].locationName << " with distance of " << shortestDistance << "km\n";
+	  cout << "The lowest cost of travel and charging is $" << lowestCost << ", at " << locations[lowestIndex].locationName << " with distance of " << shortestDistance << "km\n";
   }
 }
 
