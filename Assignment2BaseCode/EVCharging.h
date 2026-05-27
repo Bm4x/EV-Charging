@@ -272,7 +272,7 @@ void EVCharging::lowestTotalCost(){
 	if(lowestIndex == -1 || shortestDistance == DBL_MAX){
 		cout << "Could Not Locate Charging Station.\n";
 	} else {
-	  cout << "The lowest cost of travel and charging is $" << lowestCost << ", at " << locations[lowestIndex].locationName << " with distance of " << shortestDistance << "km\n";
+	  cout << "The lowest cost of travel and charging is $" << setprecision(4) << lowestCost << ", at " << locations[lowestIndex].locationName << " with distance of " << shortestDistance << "km\n";
   }
 }
 
