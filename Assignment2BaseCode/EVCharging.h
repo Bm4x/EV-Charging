@@ -148,7 +148,7 @@ void EVCharging::adjacentLocation(){
 	int storedValue = -1;
 	string search;
 	
-	cout << "All Adjacent Locations with charging station [Enter a location]: ";
+	cout << "\nAll Adjacent Locations with charging station [Enter a location]: ";
 	getline(cin, search);
 
 	for(int i = 0; i < numberOfLocations; i++){
@@ -182,7 +182,7 @@ void EVCharging::nearestLocation(){
 	int storedValue = -1;
 	string search;
 
-	cout << "Nearest Location with available charging station [Enter a location]: ";
+	cout << "\nNearest Location with available charging station [Enter a location]: ";
 	getline(cin, search);
 
 	for(int i = 0; i < numberOfLocations; i++){
@@ -224,7 +224,7 @@ void EVCharging::lowestTotalCost(){
   int storedValue = -1;
 	string search;
 
-	cout << "Nearest available charger with minimmised total coast of travel and charging [Enter a location]: ";
+	cout << "\nNearest available charger with minimmised total coast of travel and charging [Enter a location]: ";
 	getline(cin, search);
 
 	for(int i = 0; i < numberOfLocations; i++){
