@@ -224,7 +224,7 @@ void EVCharging::lowestTotalCost(){
   int storedValue = -1;
 	string search;
 
-	cout << "\nNearest available charger with minimmised total coast of travel and charging [Enter a location]: ";
+	cout << "\nNearest Available Charger with Lowest Total Cost (travel and charging) [Enter a location]: ";
 	getline(cin, search);
 
 	for(int i = 0; i < numberOfLocations; i++){
@@ -239,7 +239,7 @@ void EVCharging::lowestTotalCost(){
 		return;
 	}
 
-  cout << "Enter charging amount required (10kWh to 50kWh) ";
+  cout << "Enter Charging Amount Required [10kWh to 50kWh]: ";
   cin >> chargingAmount;
 
   if(chargingAmount < 10 || chargingAmount > 50){
@@ -272,7 +272,7 @@ void EVCharging::lowestTotalCost(){
 	if(lowestIndex == -1 || shortestDistance == DBL_MAX){
 		cout << "Could Not Locate Charging Station.\n";
 	} else {
-	  cout << "The lowest cost of travel and charging is $" << setprecision(4) << lowestCost << ", at " << locations[lowestIndex].locationName << " with distance of " << shortestDistance << "km\n";
+	  cout << "Lowest Cost of Travel & Charging: $" << setprecision(4) << lowestCost << ", Location: " << locations[lowestIndex].locationName << " with Distance of " << shortestDistance << "km\n";
   }
 }
 
