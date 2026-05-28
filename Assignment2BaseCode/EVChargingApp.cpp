@@ -20,6 +20,6 @@ int main() {
 	charging.adjacentLocation();
 	charging.nearestLocation();
 	charging.lowestTotalCost();
-
+	charging.cheapestPathToDestination();
 	return 0;
 }
