@@ -261,7 +261,7 @@ void EVCharging::lowestTotalCost(){
 
 		double currentDistance = weightedGraph->smallestWeight[i];
 
-    double chargingCost = (currentDistance * 2 * 0.10) + (locations[i].chargingPrice * chargingAmount);
+    	double chargingCost = (currentDistance * 2 * 0.10) + (locations[i].chargingPrice * chargingAmount);
 
 		if(chargingCost < lowestCost) {
 			shortestDistance = currentDistance;
@@ -278,6 +278,7 @@ void EVCharging::lowestTotalCost(){
 }
 
 void EVCharging::cheapestPathToDestination(){
+	int chargingAmount;
 	int startpoint = -1;
 	int destination =-1;
 	string startSearch, destinationSearch;
@@ -292,22 +293,64 @@ void EVCharging::cheapestPathToDestination(){
 	for(int i = 0; i < numberOfLocations; i++){
 		if(locations[i].locationName == startSearch){
 			startpoint = i;
-			break;
+		if(locations[i].locationName == destinationSearch){
+			destination = i;
 		}
 	}
 
-	for(int i = 0; i < numberOfLocations; i++){
-		if(locations[i].locationName == destinationSearch){
-			destination = i;
-			break;
-		}
-	}
 	// more error checking (if destination or start point couldnt be found)
-	if(startpoint == -1 || destination == -1){
-		cout << "Location could not be found.\n";
+	if(startpoint == -1){
+		cout << "Starting Location could not be found.\n";
 		return;
 	}
 
+	if(destination == -1){
+		cout << "Destination Location could not be found.\n";
+		return;
+	}
+
+	// getting charging amount
+	cout << "Enter Charging Amount Required [10kWh to 50kWh]: ";
+	cin >> chargingAmount;
+
+	if(chargingAmount < 10 || chargingAmount > 50){
+		cout << "Invalid Number for Charging Amount";
+		return;
+	}
+
+	// runing dijkstra on all locations from starting point (saved into vector)
+	weightedGraph->shortestPath(startpoint);
+	vector<double> startpointDistance;
+	for(int i = 0; i < numberOfLocations; i++){
+		startpointDistance[i] = weightedGraph->smallestWeight[i];
+	}
+
+	// runing dijkstra on all locations from destination point (saved into vector)
+	weightedGraph->shortestPath(destination);
+	vector<double> destinationDistance;
+	for(int i = 0; i < numberOfLocations; i++){
+		destinationDistance[i] = weightedGraph->smallestWeight[i];
+	}
+
+	double lowestCost = DBL_MAX;
+	int lowestIndex = -1;
+	double shortestDistance = DBL_MAX;
+
+
+	for(int i = 0; i < numberOfLocations; i++){
+		if(!locations[i].chargerInstalled) continue;
+		if(chargingAmount > 25 && locations[i].chargingPrice == 0) continue;
+
+		double currentDistance = weightedGraph->smallestWeight[i];
+
+    	double chargingCost = (currentDistance * 2 * 0.10) + (locations[i].chargingPrice * chargingAmount);
+
+		if(chargingCost < lowestCost) {
+			shortestDistance = currentDistance;
+			lowestIndex = i;
+			lowestCost = chargingCost;
+		}
+	}
 
 
 }
