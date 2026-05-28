@@ -24,6 +24,7 @@ public:
 	void nearestLocation();
 	void shortestPath(int vertex);
 	void lowestTotalCost();
+	void cheapestPathToDestination();
 };
 
 EVCharging::EVCharging() {
@@ -220,8 +221,8 @@ void EVCharging::nearestLocation(){
 }
 
 void EVCharging::lowestTotalCost(){
-  int chargingAmount;
-  int storedValue = -1;
+	int chargingAmount;
+	int storedValue = -1;
 	string search;
 
 	cout << "\nNearest Available Charger with Lowest Total Cost (travel and charging) [Enter a location]: ";
@@ -239,19 +240,19 @@ void EVCharging::lowestTotalCost(){
 		return;
 	}
 
-  cout << "Enter Charging Amount Required [10kWh to 50kWh]: ";
-  cin >> chargingAmount;
+	cout << "Enter Charging Amount Required [10kWh to 50kWh]: ";
+	cin >> chargingAmount;
 
-  if(chargingAmount < 10 || chargingAmount > 50){
-    cout << "Invalid Number for Charging Amount";
-    return;
-  }
+	if(chargingAmount < 10 || chargingAmount > 50){
+		cout << "Invalid Number for Charging Amount";
+		return;
+	}
 
-  weightedGraph->shortestPath(storedValue);
+	weightedGraph->shortestPath(storedValue);
 
 	double lowestCost = DBL_MAX;
 	int lowestIndex = -1;
-  double shortestDistance = DBL_MAX;
+	double shortestDistance = DBL_MAX;
 
 
 	for(int i = 0; i < numberOfLocations; i++){
@@ -265,15 +266,37 @@ void EVCharging::lowestTotalCost(){
 		if(chargingCost < lowestCost) {
 			shortestDistance = currentDistance;
 			lowestIndex = i;
-      lowestCost = chargingCost;
+			lowestCost = chargingCost;
 		}
 	}
 
 	if(lowestIndex == -1 || shortestDistance == DBL_MAX){
 		cout << "Could Not Locate Charging Station.\n";
 	} else {
-	  cout << "Lowest Cost of Travel & Charging: $" << setprecision(4) << lowestCost << ", Location: " << locations[lowestIndex].locationName << " with Distance of " << shortestDistance << "km\n";
-  }
+		cout << "Lowest Cost of Travel & Charging: $" << setprecision(4) << lowestCost << ", Location: " << locations[lowestIndex].locationName << " with Distance of " << shortestDistance << "km\n";
+	}
+}
+
+void EVCharging::cheapestPathToDestination(){
+	int storedValue = -1;
+	string search;
+
+	cout << "\nNearest Location with available charging station [Enter a location]: ";
+	getline(cin, search);
+
+	for(int i = 0; i < numberOfLocations; i++){
+		if(locations[i].locationName == search){
+			storedValue = i;
+			break;
+		}
+	}
+	
+	if(storedValue == -1){
+		cout << "Location could not be found.\n";
+		return;
+	}
+
+	
 }
 
 #endif /* EVCHARGING_H_ */
