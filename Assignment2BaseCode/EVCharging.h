@@ -257,7 +257,7 @@ void EVCharging::lowestTotalCost(){
 
 	for(int i = 0; i < numberOfLocations; i++){
 		if(locations[i].locationName == locations[storedValue].locationName || !locations[i].chargerInstalled) continue;
-    if(chargingAmount > 25 && locations[i].chargingPrice == 0) continue;
+		if(chargingAmount > 25 && locations[i].chargingPrice == 0) continue;
 
 		double currentDistance = weightedGraph->smallestWeight[i];
 
@@ -278,25 +278,38 @@ void EVCharging::lowestTotalCost(){
 }
 
 void EVCharging::cheapestPathToDestination(){
-	int storedValue = -1;
-	string search;
+	int startpoint = -1;
+	int destination =-1;
+	string startSearch, destinationSearch;
 
-	cout << "\nNearest Location with available charging station [Enter a location]: ";
-	getline(cin, search);
+	// gathering array index and error checking startpoint and destination of trip
+	cout << "\nStarting Location of Trip [Enter a location]: ";
+	getline(cin, startSearch);
+
+	cout << "\Ending Location of Trip [Enter a location]: ";
+	getline(cin, destinationSearch);
 
 	for(int i = 0; i < numberOfLocations; i++){
-		if(locations[i].locationName == search){
-			storedValue = i;
+		if(locations[i].locationName == startSearch){
+			startpoint = i;
 			break;
 		}
 	}
-	
-	if(storedValue == -1){
+
+	for(int i = 0; i < numberOfLocations; i++){
+		if(locations[i].locationName == destinationSearch){
+			destination = i;
+			break;
+		}
+	}
+	// more error checking (if destination or start point couldnt be found)
+	if(startpoint == -1 || destination == -1){
 		cout << "Location could not be found.\n";
 		return;
 	}
 
-	
+
+
 }
 
 #endif /* EVCHARGING_H_ */
