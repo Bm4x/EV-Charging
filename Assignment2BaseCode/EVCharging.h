@@ -25,6 +25,7 @@ public:
 	void shortestPath(int vertex);
 	void lowestTotalCost();
 	void cheapestPathToDestination();
+	void cheapestPathMultiDestination();
 };
 
 EVCharging::EVCharging() {
@@ -225,7 +226,7 @@ void EVCharging::lowestTotalCost(){
 	int storedValue = -1;
 	string search;
 
-	cout << "\nNearest Available Charger with Lowest Total Cost (travel and charging) [Enter a location]: ";
+	cout << "\nNearest Available Charger with Lowest Total Cost (Travel & Charging) [Enter a location]: ";
 	getline(cin, search);
 
 	for(int i = 0; i < numberOfLocations; i++){
@@ -287,7 +288,7 @@ void EVCharging::cheapestPathToDestination(){
 	cout << "\nStarting Location of Trip [Enter a location]: ";
 	getline(cin, startSearch);
 
-	cout << "\Ending Location of Trip [Enter a location]: ";
+	cout << "\nDestination of Trip [Enter a location]: ";
 	getline(cin, destinationSearch);
 
 	for(int i = 0; i < numberOfLocations; i++){
@@ -311,11 +312,11 @@ void EVCharging::cheapestPathToDestination(){
 	}
 
 	// getting charging amount
-	cout << "Enter Charging Amount Required [10kWh to 50kWh]: ";
+	cout << "\nEnter Charging Amount Required [10kWh to 50kWh]: ";
 	cin >> chargingAmount;
 
 	if(chargingAmount < 10 || chargingAmount > 50){
-		cout << "Invalid Number for Charging Amount";
+		cout << "Invalid Number for Charging Amount\n";
 		return;
 	}
 
@@ -337,14 +338,13 @@ void EVCharging::cheapestPathToDestination(){
 	int lowestIndex = -1;
 	double shortestDistance = DBL_MAX;
 
-
 	for(int i = 0; i < numberOfLocations; i++){
 		if(!locations[i].chargerInstalled) continue;
 		if(chargingAmount > 25 && locations[i].chargingPrice == 0) continue;
 
 		double currentDistance = destinationDistance[i] + startpointDistance[i];
 
-    	double chargingCost = ((currentDistance) * 2 * 0.10) + (locations[i].chargingPrice * chargingAmount);
+    	double chargingCost = ((currentDistance) * 0.10) + (locations[i].chargingPrice * chargingAmount);
 
 		if(chargingCost < lowestCost) {
 			shortestDistance = currentDistance;
@@ -355,8 +355,14 @@ void EVCharging::cheapestPathToDestination(){
 	if(lowestIndex == -1){
 		cout << "Could not find suitable path.\n";
 	} else {
-		cout << "Starting Point: " << startpointDistance[lowestIndex] << "\nDestination: " << destinationDistance[lowestIndex] << "\n Most Optimal Charging Station: " << locations[lowestIndex].locationName;
+		cout << "Starting Point: " << locations[startpoint].locationName << "\nDestination: " << locations[destination].locationName;
+		cout << "\nMost Optimal Charging Station: " << locations[lowestIndex].locationName << "\nTotal Cost (Charging & Travel): $" << lowestCost;
+		cout << "\nTotal Distance: " << shortestDistance << "km\n";
 	}
+}
+
+void EVCharging::cheapestPathMultiDestination(){
+
 }
 
 #endif /* EVCHARGING_H_ */
