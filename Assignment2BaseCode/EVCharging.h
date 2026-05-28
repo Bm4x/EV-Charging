@@ -293,6 +293,7 @@ void EVCharging::cheapestPathToDestination(){
 	for(int i = 0; i < numberOfLocations; i++){
 		if(locations[i].locationName == startSearch){
 			startpoint = i;
+		}
 		if(locations[i].locationName == destinationSearch){
 			destination = i;
 		}
@@ -320,14 +321,14 @@ void EVCharging::cheapestPathToDestination(){
 
 	// runing dijkstra on all locations from starting point (saved into vector)
 	weightedGraph->shortestPath(startpoint);
-	vector<double> startpointDistance;
+	vector<double> startpointDistance(numberOfLocations);
 	for(int i = 0; i < numberOfLocations; i++){
 		startpointDistance[i] = weightedGraph->smallestWeight[i];
 	}
 
 	// runing dijkstra on all locations from destination point (saved into vector)
 	weightedGraph->shortestPath(destination);
-	vector<double> destinationDistance;
+	vector<double> destinationDistance(numberOfLocations);
 	for(int i = 0; i < numberOfLocations; i++){
 		destinationDistance[i] = weightedGraph->smallestWeight[i];
 	}
@@ -341,9 +342,9 @@ void EVCharging::cheapestPathToDestination(){
 		if(!locations[i].chargerInstalled) continue;
 		if(chargingAmount > 25 && locations[i].chargingPrice == 0) continue;
 
-		double currentDistance = weightedGraph->smallestWeight[i];
+		double currentDistance = destinationDistance[i] + startpointDistance[i];
 
-    	double chargingCost = (currentDistance * 2 * 0.10) + (locations[i].chargingPrice * chargingAmount);
+    	double chargingCost = ((currentDistance) * 2 * 0.10) + (locations[i].chargingPrice * chargingAmount);
 
 		if(chargingCost < lowestCost) {
 			shortestDistance = currentDistance;
@@ -351,8 +352,11 @@ void EVCharging::cheapestPathToDestination(){
 			lowestCost = chargingCost;
 		}
 	}
-
-
+	if(lowestIndex == -1){
+		cout << "Could not find suitable path.\n";
+	} else {
+		cout << "Starting Point: " << startpointDistance[lowestIndex] << "\nDestination: " << destinationDistance[lowestIndex] << "\n Most Optimal Charging Station: " << locations[lowestIndex].locationName;
+	}
 }
 
 #endif /* EVCHARGING_H_ */
