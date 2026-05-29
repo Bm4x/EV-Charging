@@ -283,7 +283,7 @@ void EVCharging::cheapestPathToDestination(){
 	int startpoint = -1;
 	int destination =-1;
 	string startSearch, destinationSearch;
-	cout << "\nMost Efficient Path of travel with One Charge\n";
+	cout << "\nTask 7: Most Efficient Path of travel with One Charge\n";
 
 	// gathering array index and error checking startpoint and destination of trip
 	cout << "\nStarting Location of Trip [Enter a location]: ";
@@ -368,7 +368,7 @@ void EVCharging::cheapestPathMultiDestination(){
 	int startpoint = -1;
 	int destination =-1;
 	string startSearch, destinationSearch;
-	cout << "\nMost Efficient Path of travel with Multiple Charges at Location\n";
+	cout << "\nTask 8: Most Efficient Path of travel with Multiple Charges at Location\n";
 	
 	// gathering array index and error checking startpoint and destination of trip
 	cout << "\nStarting Location of Trip [Enter a location]: ";

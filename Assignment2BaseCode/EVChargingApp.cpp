@@ -21,5 +21,6 @@ int main() {
 	charging.nearestLocation();
 	charging.lowestTotalCost();
 	charging.cheapestPathToDestination();
+	charging.cheapestPathMultiDestination();
 	return 0;
 }
