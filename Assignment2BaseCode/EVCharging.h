@@ -283,6 +283,7 @@ void EVCharging::cheapestPathToDestination(){
 	int startpoint = -1;
 	int destination =-1;
 	string startSearch, destinationSearch;
+	cout << "\nMost Efficient Path of travel with One Charge\n";
 
 	// gathering array index and error checking startpoint and destination of trip
 	cout << "\nStarting Location of Trip [Enter a location]: ";
@@ -344,7 +345,7 @@ void EVCharging::cheapestPathToDestination(){
 
 		double currentDistance = destinationDistance[i] + startpointDistance[i];
 
-    	double chargingCost = ((currentDistance) * 0.10) + (locations[i].chargingPrice * chargingAmount);
+    	double chargingCost = (currentDistance  * 0.10) + (locations[i].chargingPrice * chargingAmount);
 
 		if(chargingCost < lowestCost) {
 			shortestDistance = currentDistance;
@@ -352,6 +353,7 @@ void EVCharging::cheapestPathToDestination(){
 			lowestCost = chargingCost;
 		}
 	}
+
 	if(lowestIndex == -1){
 		cout << "Could not find suitable path.\n";
 	} else {
@@ -362,7 +364,130 @@ void EVCharging::cheapestPathToDestination(){
 }
 
 void EVCharging::cheapestPathMultiDestination(){
+	int chargingAmount;
+	int startpoint = -1;
+	int destination =-1;
+	string startSearch, destinationSearch;
+	cout << "\nMost Efficient Path of travel with Multiple Charges at Location\n";
+	
+	// gathering array index and error checking startpoint and destination of trip
+	cout << "\nStarting Location of Trip [Enter a location]: ";
+	getline(cin, startSearch);
 
+	cout << "\nDestination of Trip [Enter a location]: ";
+	getline(cin, destinationSearch);
+
+	for(int i = 0; i < numberOfLocations; i++){
+		if(locations[i].locationName == startSearch){
+			startpoint = i;
+		}
+		if(locations[i].locationName == destinationSearch){
+			destination = i;
+		}
+	}
+
+	// more error checking (if destination or start point couldnt be found)
+	if(startpoint == -1){
+		cout << "Starting Location could not be found.\n";
+		return;
+	}
+
+	if(destination == -1){
+		cout << "Destination Location could not be found.\n";
+		return;
+	}
+
+	// getting charging amount
+	cout << "\nEnter Charging Amount Required [10kWh to 50kWh]: ";
+	cin >> chargingAmount;
+
+	if(chargingAmount < 10 || chargingAmount > 50){
+		cout << "Invalid Number for Charging Amount\n";
+		return;
+	}
+
+	// runing dijkstra on all locations from starting point (saved into vector)
+	weightedGraph->shortestPath(startpoint);
+	vector<double> startpointDistance(numberOfLocations);
+	for(int i = 0; i < numberOfLocations; i++){
+		startpointDistance[i] = weightedGraph->smallestWeight[i];
+	}
+
+	// runing dijkstra on all locations from destination point (saved into vector)
+	weightedGraph->shortestPath(destination);
+	vector<double> destinationDistance(numberOfLocations);
+	for(int i = 0; i < numberOfLocations; i++){
+		destinationDistance[i] = weightedGraph->smallestWeight[i];
+	}
+
+	double lowestCost = DBL_MAX;
+	double totalDistance;
+
+	int firstStation = -1;
+	double firstCharge;
+
+	int secondStation = -1;
+	double secondCharge;
+
+	for(int i = 0; i < numberOfLocations; i++){
+		if(!locations[i].chargerInstalled) continue;
+
+		// runs Dijkstra to on first station to get all other station distances
+		weightedGraph->shortestPath(i);
+		vector<double> secondStationSearch(numberOfLocations);
+		for(int n = 0; n < numberOfLocations; n++){
+			secondStationSearch[n] = weightedGraph->smallestWeight[n];
+		}
+
+		for(int j = 0; j < numberOfLocations; j++){
+			// checking all conditions that would force an continue
+			if(locations[i].locationName == locations[j].locationName) continue;
+			if(!locations[i].chargerInstalled) continue;
+
+			if(locations[i].chargingPrice == 0 && locations[j].chargingPrice == 0) continue;
+			
+			// if the above condition did not go off there might possible be atleast 1 free station
+			if(locations[i].chargingPrice == 0){
+				firstCharge = 25;
+				secondCharge = 0;
+			} else if (locations[j].chargingPrice == 0){
+				secondCharge = 0;
+				firstCharge = 25;
+			} else if (locations[i].chargingPrice >= locations[j].chargingPrice) {
+				firstCharge = 0;
+				secondCharge = chargingAmount;
+			} else {
+				firstCharge = chargingAmount;
+				secondCharge = 0;
+			}
+
+			// stops pointless calculations on non compatiable values 
+			if(firstCharge < 0 || secondCharge < 0) continue;
+
+			double currentDistance = destinationDistance[i] + startpointDistance[i] + secondStationSearch[j];
+
+    		double totalCost = (currentDistance  * 0.10) + ((locations[i].chargingPrice * firstCharge) + (locations[j].chargingPrice * secondCharge));
+
+			if(totalCost < lowestCost) {
+				firstStation = i;
+				secondStation = j;
+				lowestCost = totalCost;
+				totalDistance = currentDistance;
+			}
+		}
+	}
+
+	if(firstStation == -1 && secondStation == -1){
+		cout << "Could not find suitable path.\n";
+	} else if (secondStation == -1) {
+		cout << "Starting Point: " << locations[startpoint].locationName << "\nDestination: " << locations[destination].locationName;
+		cout << "\nMost Optimal Charging Station: " << locations[firstStation].locationName << "\nTotal Cost (Charging & Travel): $" << lowestCost;
+		cout << "\nTotal Distance: " << totalDistance << "km\n";
+	} else {
+		cout << "Starting Point: " << locations[startpoint].locationName << "\nDestination: " << locations[destination].locationName;
+		cout << "\nFirst Most Optimal Charging Station: " << locations[firstStation].locationName << "\nSecond Most Optimal Charging Station: " << locations[secondStation].locationName;
+		cout << "\nTotal Cost (Charging & Travel): $" << lowestCost << "\nTotal Distance: " << totalDistance << "km\n";
+	}
 }
 
 #endif /* EVCHARGING_H_ */
