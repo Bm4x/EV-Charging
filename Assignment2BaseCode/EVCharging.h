@@ -358,7 +358,7 @@ void EVCharging::cheapestPathToDestination(){
 		cout << "Could not find suitable path.\n";
 	} else {
 		cout << "Starting Point: " << locations[startpoint].locationName << "\nDestination: " << locations[destination].locationName;
-		cout << "\nMost Optimal Charging Station: " << locations[lowestIndex].locationName << "\nTotal Cost (Charging & Travel): $" << lowestCost;
+		cout << "\nMost Optimal Charging Station: " << locations[lowestIndex].locationName << "\nTotal Cost (Charging & Travel): $" << setprecision(4) << lowestCost;
 		cout << "\nTotal Distance: " << shortestDistance << "km\n";
 	}
 }
@@ -489,9 +489,9 @@ void EVCharging::cheapestPathMultiDestination(){
 		cout << "\nTotal Distance: " << totalDistance << "km\n";
 	} else {
 		cout << "Starting Point: " << locations[startpoint].locationName << "\nDestination: " << locations[destination].locationName;
-		cout << "\nFirst Most Optimal Charging Station: " << locations[firstStation].locationName << ", Charge Amount = " << firstCharge;
-		cout << "\nSecond Most Optimal Charging Station: " << locations[secondStation].locationName<< ", Charge Amount = " << secondCharge;
-		cout << "\nTotal Cost (Charging & Travel): $" << lowestCost << "\nTotal Distance: " << totalDistance << "km\n";
+		cout << "\nFirst Most Optimal Charging Station: " << locations[firstStation].locationName << ", Charge Amount: " << firstCharge<< "kWh";
+		cout << "\nSecond Most Optimal Charging Station: " << locations[secondStation].locationName<< ", Charge Amount: " << secondCharge << "kWh";
+		cout << "\nTotal Cost (Charging & Travel): $" << setprecision(4) << lowestCost << "\nTotal Distance: " << totalDistance << "km\n";
 	}
 }
 
