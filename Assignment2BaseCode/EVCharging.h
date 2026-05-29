@@ -443,6 +443,7 @@ void EVCharging::cheapestPathMultiDestination(){
 			// checking all conditions that would force an continue
 			if(locations[i].locationName == locations[j].locationName) continue;
 			if(!locations[i].chargerInstalled) continue;
+			if(!locations[j].chargerInstalled) continue;
 
 			if(locations[i].chargingPrice == 0 && locations[j].chargingPrice == 0) continue;
 			
@@ -488,7 +489,8 @@ void EVCharging::cheapestPathMultiDestination(){
 		cout << "\nTotal Distance: " << totalDistance << "km\n";
 	} else {
 		cout << "Starting Point: " << locations[startpoint].locationName << "\nDestination: " << locations[destination].locationName;
-		cout << "\nFirst Most Optimal Charging Station: " << locations[firstStation].locationName << "\nSecond Most Optimal Charging Station: " << locations[secondStation].locationName;
+		cout << "\nFirst Most Optimal Charging Station: " << locations[firstStation].locationName << ", Charge Amount = " << firstCharge;
+		cout << "\nSecond Most Optimal Charging Station: " << locations[secondStation].locationName<< ", Charge Amount = " << secondCharge;
 		cout << "\nTotal Cost (Charging & Travel): $" << lowestCost << "\nTotal Distance: " << totalDistance << "km\n";
 	}
 }
