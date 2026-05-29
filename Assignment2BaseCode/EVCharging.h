@@ -451,11 +451,15 @@ void EVCharging::cheapestPathMultiDestination(){
 				firstCharge = 25;
 				secondCharge = 0;
 			} else if (locations[j].chargingPrice == 0){
-				secondCharge = 0;
-				firstCharge = 25;
+				if(chargingAmount > 25){
+					secondCharge = chargingAmount - 25;
+				}
+				firstCharge = chargingAmount - secondCharge;
 			} else if (locations[i].chargingPrice >= locations[j].chargingPrice) {
-				firstCharge = 0;
-				secondCharge = chargingAmount;
+					if(chargingAmount > 25){
+					firstCharge = chargingAmount - 25;
+				}
+				secondCharge = chargingAmount - firstCharge;
 			} else {
 				firstCharge = chargingAmount;
 				secondCharge = 0;
@@ -464,7 +468,7 @@ void EVCharging::cheapestPathMultiDestination(){
 			// stops pointless calculations on non compatiable values 
 			if(firstCharge < 0 || secondCharge < 0) continue;
 
-			double currentDistance = destinationDistance[i] + startpointDistance[i] + secondStationSearch[j];
+			double currentDistance = startpointDistance[i] +  secondStationSearch[j] + destinationDistance[i] ;
 
     		double totalCost = (currentDistance  * 0.10) + ((locations[i].chargingPrice * firstCharge) + (locations[j].chargingPrice * secondCharge));
 
