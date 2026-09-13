@@ -281,7 +281,7 @@ void EVCharging::lowestTotalCost(){
 void EVCharging::cheapestPathToDestination(){
 	int chargingAmount;
 	int startpoint = -1;
-	int destination =-1;
+	int destination = -1;
 	string startSearch, destinationSearch;
 	cout << "\nTask 7: Most Efficient Path of travel with One Charge\n";
 
