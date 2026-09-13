@@ -1,0 +1,1 @@
+Project which uses weighted matrix of Western Sydney locations, that EV charging spots, and uses their values to calculate the best route for travelling whilst maximising EV charge on the route. Please keep in mind values and locations may not be accurate however can easily be changed.
