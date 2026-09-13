@@ -1,10 +1,11 @@
-#include <iostream>
+#include <cfloat>
 #include <fstream>
-#include <string>
 #include <iomanip>
+#include <iostream>
 #include <list>
-#include <queue>
 #include <map>
+#include <queue>
+#include <string>
 
 using namespace std;
 
@@ -13,14 +14,15 @@ using namespace std;
 #include "EVCharging.h"
 
 int main() {
-	EVCharging charging;
-	charging.printLocations();
-	charging.printAdjacencyMatrix();
-	charging.chargingStationAscending();
-	charging.adjacentLocation();
-	charging.nearestLocation();
-	charging.lowestTotalCost();
-	charging.cheapestPathToDestination();
-	charging.cheapestPathMultiDestination();
-	return 0;
+    EVCharging charging;
+    charging.printLocations();
+    charging.printAdjacencyMatrix();
+    charging.chargingStationAscending();
+    charging.adjacentLocation();
+    charging.nearestLocation();
+    charging.lowestTotalCost();
+    charging.cheapestPathToDestination();
+    charging.cheapestPathMultiDestination();
+    charging.fastestRoute();
+    return 0;
 }

@@ -26,6 +26,7 @@ class EVCharging { // you may also declare this class as an extension of
     void lowestTotalCost();
     void cheapestPathToDestination();
     void cheapestPathMultiDestination();
+    void fastestRoute();
 };
 
 EVCharging::EVCharging() {
@@ -258,6 +259,7 @@ void EVCharging::lowestTotalCost() {
 
     cout << "Enter Charging Amount Required [10kWh to 50kWh]: ";
     cin >> chargingAmount;
+    cin.ignore(); // clears newline from input buffer (causes issues with input)
 
     if (chargingAmount < 10 || chargingAmount > 50) {
         cout << "Invalid Number for Charging Amount";
@@ -304,7 +306,7 @@ void EVCharging::cheapestPathToDestination() {
     int startpoint = -1;
     int destination = -1;
     string startSearch, destinationSearch;
-    cout << "\nTask 7: Most Efficient Path of travel with One Charge\n";
+    cout << "\nMost Efficient Path of travel with One Charge (Dijkstra's Algorithm)\n";
 
     // gathering array index and error checking startpoint and destination of
     // trip
@@ -337,6 +339,7 @@ void EVCharging::cheapestPathToDestination() {
     // getting charging amount
     cout << "\nEnter Charging Amount Required [10kWh to 50kWh]: ";
     cin >> chargingAmount;
+    cin.ignore(); // clears newline from input buffer (causes issues with input)
 
     if (chargingAmount < 10 || chargingAmount > 50) {
         cout << "Invalid Number for Charging Amount\n";
@@ -398,8 +401,8 @@ void EVCharging::cheapestPathMultiDestination() {
     int startpoint = -1;
     int destination = -1;
     string startSearch, destinationSearch;
-    cout << "\nTask 8: Most Efficient Path of travel with Multiple Charges at "
-            "Location\n";
+    cout << "\nMost Efficient Path of travel with Multiple Charges at "
+            "Location (Dijkstra's Algorithm)\n";
 
     // gathering array index and error checking startpoint and destination of
     // trip
@@ -432,6 +435,7 @@ void EVCharging::cheapestPathMultiDestination() {
     // getting charging amount
     cout << "\nEnter Charging Amount Required [10kWh to 50kWh]: ";
     cin >> chargingAmount;
+    cin.ignore(); // clears newline from input buffer (causes issues with input)
 
     if (chargingAmount < 10 || chargingAmount > 50) {
         cout << "Invalid Number for Charging Amount\n";
@@ -545,6 +549,70 @@ void EVCharging::cheapestPathMultiDestination() {
         cout << "\nTotal Cost (Charging & Travel): $" << setprecision(4)
              << lowestCost << "\nTotal Distance: " << totalDistance << "km\n";
     }
+}
+
+// breadthFirstSearch
+void EVCharging::fastestRoute() {
+    int startpoint = -1;
+    int destination = -1;
+    string startSearch, destinationSearch;
+
+    cout << "\nQuick Route using Breadth First Search\n";
+
+    // gathering array index and error checking startpoint and destination of
+    // trip
+    cout << "\nStarting Location of Trip [Enter a location]: ";
+    getline(cin, startSearch);
+
+    cout << "\nDestination of Trip [Enter a location]: ";
+    getline(cin, destinationSearch);
+
+    // getting index of locations
+    for (int i = 0; i < numberOfLocations; i++) {
+        if (locations[i].locationName == startSearch) {
+            startpoint = i;
+        }
+        if (locations[i].locationName == destinationSearch) {
+            destination = i;
+        }
+    }
+
+    // more error checking (if destination or start point couldnt be found)
+    if (startpoint == -1) {
+        cout << "Starting Location could not be found.\n";
+        return;
+    }
+
+    if (destination == -1) {
+        cout << "Destination Location could not be found.\n";
+        return;
+    }
+
+    // running bfs
+    vector<int> shortestPath =
+        weightedGraph->breadthFirstSearch(startpoint, destination);
+
+    // error checking
+    if (shortestPath.empty()) {
+        cout << "Could not find path for the given locations\n";
+        return;
+    }
+
+    // printing total distance
+    double distance = 0;
+    for (int i = 0; i < shortestPath.size() - 1; i++) {
+        distance +=
+            weightedGraph->getWeight(shortestPath[i], shortestPath[i + 1]);
+    }
+    cout << "Total Distance: " << distance << "km\n";
+
+    // printing path
+    for (int i = 0; i < shortestPath.size(); i++) {
+        cout << locations[shortestPath[i]].locationName;
+        if (i + 1 < shortestPath.size())
+            cout << " --> ";
+    }
+    cout << "\n";
 }
 
 #endif /* EVCHARGING_H_ */
